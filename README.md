@@ -8,21 +8,31 @@ your jars on the classpath
 This was extracted from Play Framework, I've made only minimal
 changes to parameterize it.
 
-Settings
---------
-
-* stage-main-and-args = the main class to run (and any arguments)
-* package-excludes = any jars not to stage 
-
-
 Usage
 -----
 
 In `build.sbt`:
 
     // Add as plugin etc.
-    Stage.settingsWithMain("my.main.Class and-an-arg")
+
+    StageKeys.stageMainAndArgs := "my.main.Class and-an-arg"
+
+    Stage.defaultSettings
 
 Now from SBT:
 
     > stage
+
+SBT Settings
+------------
+
+* stageMainAndArgs = the main class to run (and any arguments)
+* packageExcludes = anything not to stage 
+
+Credits
+-------
+
+All of the code has come from the Play framework's SBT plugin. Thanks!
+
+https://github.com/playframework/playframework/blob/master/framework/src/sbt-plugin/src/main/scala/PlayCommands.scala#L177
+
