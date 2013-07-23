@@ -2,7 +2,7 @@ import sbt._
 
 import Keys._
 
-trait StageKeys {
+object StageKeys {
   val stage = TaskKey[Unit]("stage")
 
   val packageForStage = TaskKey[Seq[File]]("package-for-stage")
@@ -12,13 +12,12 @@ trait StageKeys {
   val packageExcludes = SettingKey[Seq[String]]("package-excludes")
 }
 
-object Stage extends Plugin with StageKeys {
+object Stage extends Plugin {
   import StageKeys._
-  def settingsWithMain(mainAndArgs: String): Seq[Project.Setting[_]] = Seq(
+  def defaultSettings: Seq[Project.Setting[_]] = Seq(
     stage <<= playStageTask,
     packageExcludes := Seq(),
-    packageForStage <<= packageForStageTask,
-    stageMainAndArgs := mainAndArgs
+    packageForStage <<= packageForStageTask
   )
 
   val playStageTask = (baseDirectory, packageForStage, stageMainAndArgs, dependencyClasspath in Runtime, target, streams).map { (root,
